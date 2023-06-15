@@ -32,6 +32,9 @@ def visit(node, nodes):
         nodes.append(node)
     return nodes
 
+
+
+
 def recursive_visit(node, nodes):
     if re.search('^(\w*\d*\()', node) and node.endswith(")"):
         node = node[node.index("(") + 1:-1]
@@ -54,8 +57,31 @@ def recursive_visit(node, nodes):
         for i in new_list:
             visit(i, nodes)
             recursive_visit(i, nodes)
+        else:
+            return new_list
     
     return nodes
+
+def sub_visit(node, nodes):
+    if re.search('^(\w*\d*\()', node) and node.endswith(")"):
+        node = node[node.index("(") + 1:-1]
+        temp = node.replace(" ", "")
+        functions = re.findall('\w*\(*[^()]+\)+', node)
+        for function in functions:
+            escaped_sub_string = re.escape(function)
+            pattern = re.compile(escaped_sub_string + ',?')
+            node = re.sub(pattern, "", node)
+
+        if re.search('^(\w*\d*\()', node) and node.endswith(")"):
+            visit(temp, nodes)
+            return recursive_visit(temp, nodes)
+
+        new_list = functions + [ele.strip() for ele in node.split(",") if ele != '' and ele != ' ']
+        if len(new_list) > 1:
+            while ','.join(new_list) != temp:
+                random.shuffle(new_list)
+    return new_list
+
 
 def create_graph(dag, nodes):
     nodes = sorted(nodes, key=len, reverse=True)
@@ -64,7 +90,7 @@ def create_graph(dag, nodes):
         args = []
         if re.search('^(\w*\d*\()', node) and node.endswith(")"):
             sub_nodes = []
-            sub_nodes = recursive_visit(node, sub_nodes)
+            sub_nodes = sub_visit(node, sub_nodes)
 
             for sub_node in sub_nodes:
                 args.append(nodes.index(sub_node) + 1)
@@ -78,6 +104,13 @@ def create_graph(dag, nodes):
                 if nodes.index(node) + 1 in dag.nodes[n]["args"]:
                     ccpar_set.add(n)
             dag.add_node(nodes.index(node) + 1, node, [], nodes.index(node) + 1, ccpar_set)
+
+    for node in nodes:
+        ccpar_set = set()
+        for n in dag.nodes:
+            if nodes.index(node) + 1 in dag.nodes[n]["args"]:
+                ccpar_set.add(n)
+        dag.add_node(nodes.index(node) + 1, node,dag.nodes[nodes.index(node) + 1]['args'] , dag.nodes[nodes.index(node) + 1]['find'], ccpar_set)
     
     return nodes, dag
 
