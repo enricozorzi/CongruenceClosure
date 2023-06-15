@@ -6,14 +6,17 @@ from parse import *
 def main():
     cc_dag = CC_DAG()
     smt_parser = SmtLibParser()
-    script = smt_parser.get_script_fname("Test/test1.smt2")  # Change test1,test2,test3,test4 to change the smt2 file
+    script = smt_parser.get_script_fname("Test/test4.smt2")  # Change test1,test2,test3,test4 to change the smt2 file
 
-    formula1 = "f(a, b) = a and f(f(a, b), b) != a"  
-    formula2 = "f(o, p) = a and f(a, f(a, b, c, g), b, f(c, d)) != a"
-    formula3 = "f(f(f(f(f(a))))) = a and f(a) != a"
-    formula4 = translate_string(str(script.get_strict_formula().serialize()))
+    #Dont Use f as a variable name in the formula
+    formula1 = "f(a, b) = a and f(f(a, b), b) != a"  #UNSAT
+    formula2 = "f(a, b) = a and f(f(d, b), b) != a"  #SAT
+    formula3 = "f(f(f(f(f(a))))) = a and f(a) != a"  #UNSAT
+    formula4 = "f(f(f(f(f(a))))) = a and f(a) = a"   #SAT
+    formula5 = translate_string(str(script.get_strict_formula().serialize()))
+ 
 
-    new_formula = formula4.replace("f", "")  # Change s to s1, s2, s3, s4 to test
+    new_formula = formula5.replace("f", "")  # Change s to s1, s2, s3, s4 to test
     print("formula:", new_formula)
 
     list_of_nodes, cc_dag = parse_formula(new_formula, cc_dag)
@@ -35,6 +38,7 @@ def main():
     visualize_dag(cc_dag)
 
     print(cc_dag.solve())
+    
 
 if __name__ == "__main__":
     main()

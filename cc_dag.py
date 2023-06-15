@@ -64,11 +64,23 @@ class CC_DAG:
             return False
 
     def solve(self):
-        for eq in self.equalities:
-            val1, val2 = self.find(eq[0]), self.find(eq[1])
-            self.merge(val1, val2)
-        for ineq in self.inequalities:
-            val1, val2 = self.find(ineq[0]), self.find(ineq[1])
-            if val1 == val2:
+        forbiddenMerges = set()
+
+        for pair in self.inequalities:
+            firstId, secondId = pair
+            forbiddenMerges.add((firstId, secondId))
+
+        for pair in self.equalities:
+            firstId, secondId = pair
+            if (firstId, secondId) in forbiddenMerges:
                 return "UNSAT"
+            self.merge(firstId, secondId)
+    
+        for pair in self.inequalities:
+            firstId, secondId = pair
+            forbiddenMerges.add((firstId, secondId))
+            if self.find(firstId) == self.find(secondId):
+                return "UNSAT"
+            
         return "SAT"
+        
