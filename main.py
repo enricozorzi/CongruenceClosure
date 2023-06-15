@@ -6,7 +6,7 @@ from parse import *
 a= CC_DAG()
 cnf_parser = CNFizer()
 smtparse = SmtLibParser()
-script = smtparse.get_script_fname("myproject/Test/test4.smt2") # Change test1,test2,test3,test4 to test
+script = smtparse.get_script_fname("Test/test4.smt2") # Change test1,test2,test3,test4 to test
 
 s1 = "f(a,b) = a and f(f(a,b),b) != a" 
 s2 = "f(o,p) = a and f(a,f(a,b,c,g),b,f(c,d)) != a"
