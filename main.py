@@ -1,45 +1,40 @@
 from pysmt.smtlib.parser import SmtLibParser
-from pysmt.rewritings import CNFizer 
-
-from cc_dag import *
+from pysmt.rewritings import CNFizer
+from cc_dag import CC_DAG
 from parse import *
 
+def main():
+    cc_dag = CC_DAG()
+    smt_parser = SmtLibParser()
+    script = smt_parser.get_script_fname("Test/test1.smt2")  # Change test1,test2,test3,test4 to change the smt2 file
 
+    formula1 = "f(a, b) = a and f(f(a, b), b) != a"  
+    formula2 = "f(o, p) = a and f(a, f(a, b, c, g), b, f(c, d)) != a"
+    formula3 = "f(f(f(f(f(a))))) = a and f(a) != a"
+    formula4 = translate_string(str(script.get_strict_formula().serialize()))
 
-a= CC_DAG()
-cnf_parser = CNFizer()
-smtparse = SmtLibParser()
-script = smtparse.get_script_fname("Test/test1.smt2") # Change test1,test2,test3,test4 to test
+    new_formula = formula4.replace("f", "")  # Change s to s1, s2, s3, s4 to test
+    print("formula:", new_formula)
 
-s1 = "f(a,b) = a and f(f(a,b),b) != a" 
-s2 = "f(o,p) = a and f(a,f(a,b,c,g),b,f(c,d)) != a"
-s3 = "f(f(f(f(f(a))))) = a and f(a) != a"
-s4 = traduceString(str(script.get_strict_formula().serialize()))
+    list_of_nodes, cc_dag = parse_formula(new_formula, cc_dag)
+    list_of_nodes = sorted(list_of_nodes, key=len, reverse=True)
+    print("list of nodes:", list_of_nodes)
 
-new_string = s4.replace("f","") # Change s to s1,s2,s3,s4 to test
-print("string:",new_string)
-
-list_node,a = parsing(new_string,a)
-list_node = sorted(list_node, key=len,  reverse=True)
-print("list of node:",list_node)
-
-create_graph(a,list_node)
-print("\n------------------")
-for i in a.nodes:
-    print("id:",i)
-    for j in a.nodes[i]:
-        print( j,":", a.nodes[i][j])
+    create_graph(cc_dag, list_of_nodes)
     print("\n------------------")
-        
+    for node_id in cc_dag.nodes:
+        print("id:", node_id)
+        for node_value in cc_dag.nodes[node_id]:
+            print(node_value, ":", cc_dag.nodes[node_id][node_value])
+        print("\n------------------")
 
+    cc_dag.equalities, cc_dag.inequalities = update_eq_ineq(cc_dag.equalities, cc_dag.inequalities, list_of_nodes)
+    print("eq_nodes:", cc_dag.equalities)
+    print("ineq_nodes:", cc_dag.inequalities)
+    print("------------------\n")
+    visualize_dag(cc_dag)
 
+    print(cc_dag.solve())
 
-a.equalities,a.inequalities = update_eq_ineq(a.equalities,a.inequalities,list_node)
-print("eq_node:",a.equalities)
-print("ineq_node:",a.inequalities)
-print("------------------\n")
-visualize_dag(a)
-
-print(a.solve())
-
-
+if __name__ == "__main__":
+    main()

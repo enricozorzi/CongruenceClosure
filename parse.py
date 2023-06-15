@@ -1,39 +1,38 @@
 import re
 import random
-from cc_dag import *
 import networkx as nx
 from matplotlib import pyplot as plt
+from cc_dag import *
 
-
-def parsing(F,a):
-    list_node=[]
-    for i in re.split(" and ",F):
-        if "!=" in i:
-            a.inequalities.append(i.split(" != "))
+def parse_formula(formula, dag):
+    nodes = []
+    for sub_formula in re.split(" and ", formula):
+        sub_formula = sub_formula.replace(" ", "")
+        if "!=" in sub_formula:
+            dag.inequalities.append(sub_formula.split("!="))
         else:
-            a.equalities.append(i.split(" = "))
-            
-    for eq in a.equalities:
+            dag.equalities.append(sub_formula.split("="))
+    
+    for eq in dag.equalities:
         for node in eq:
-            if node not in list_node:
-                visit(node,list_node)
-                rec(node,list_node)
-
-    for ineq in a.inequalities:
+            if node not in nodes:
+                visit(node, nodes)
+                recursive_visit(node, nodes)
+    
+    for ineq in dag.inequalities:
         for node in ineq:
-            if node not in list_node:
-                visit(node,list_node)
-                rec(node,list_node)
-    return list_node,a
+            if node not in nodes:
+                visit(node, nodes)
+                recursive_visit(node, nodes)
+    
+    return nodes, dag
 
+def visit(node, nodes):
+    if node not in nodes:
+        nodes.append(node)
+    return nodes
 
-def visit(node,list_node):
-    if node not in list_node:
-        list_node.append(node)
-        return list_node
-    return list_node
-
-def rec(node, list_node):
+def recursive_visit(node, nodes):
     if re.search('^(\w*\d*\()', node) and node.endswith(")"):
         node = node[node.index("(") + 1:-1]
         temp = node.replace(" ", "")
@@ -44,82 +43,85 @@ def rec(node, list_node):
             node = re.sub(pattern, "", node)
 
         if re.search('^(\w*\d*\()', node) and node.endswith(")"):
-            visit(temp, list_node)
-            return rec(temp, list_node)
+            visit(temp, nodes)
+            return recursive_visit(temp, nodes)
 
-        new_list = functions + [ele.strip() for ele in node.split(",") if ele != ''and ele != ' ']
+        new_list = functions + [ele.strip() for ele in node.split(",") if ele != '' and ele != ' ']
         if len(new_list) > 1:
             while ','.join(new_list) != temp:
                 random.shuffle(new_list)
+        
         for i in new_list:
-            visit(i, list_node)
-            rec(i, list_node)
-    return list_node
-
-
-def create_graph(a,list_node):
-    list_node = sorted(list_node, key=len,  reverse=True)
-    ccpar= set()
-    for i in list_node:
-        args=[]
-        if re.search('^(\w*\d*\()', i) and i.endswith(")"):
-            list = []
-            list = rec(i,list)
-
-            for node in list:
-                args.append(list_node.index(node)+1)
-            a.add_node(list_node.index(i)+1, i, args,list_node.index(list[0])+1 , set())
-
-    for i in list_node:
-        ccpar= set()
-        if not re.search('^(\w*\d*\()', i) and not i.endswith(")"):
-            for n in a.nodes:
-                if list_node.index(i)+1 in a.nodes[n]["args"]:
-                    ccpar.add(n)
-            a.add_node(list_node.index(i)+1, i, [], list_node.index(i)+1, ccpar)
-            
-    return list_node,a
+            visit(i, nodes)
+            recursive_visit(i, nodes)
     
-def update_eq_ineq(eq,ineq,list_node):
-    list_node = sorted(list_node, key=len,  reverse=True)
-    for i in range(len(eq)):
-        for node in range(len(eq[i])):
-            eq[i][node]=list_node.index(eq[i][node])+1
-    for i in range(len(ineq)):
-        for node in range(len(ineq[i])):
-            ineq[i][node]=list_node.index(ineq[i][node])+1
-    return eq,ineq
+    return nodes
 
+def create_graph(dag, nodes):
+    nodes = sorted(nodes, key=len, reverse=True)
+    ccpar_set = set()
+    for node in nodes:
+        args = []
+        if re.search('^(\w*\d*\()', node) and node.endswith(")"):
+            sub_nodes = []
+            sub_nodes = recursive_visit(node, sub_nodes)
 
-def traduceString(F):
-    if F.startswith("(") and F.endswith(")"):
-        F = F[1:-1]
-    F=F.replace("&","and")
-    for i in re.split(" and ",F):
-        temp = i
-        if i.startswith("(") and i.endswith(")"): i = i[1:-1]
-        if "!" in i:
-            i = i[3:-1]
-            i= i.replace("=","!=")
-        F = F.replace(temp,i)
-    return F
+            for sub_node in sub_nodes:
+                args.append(nodes.index(sub_node) + 1)
+            
+            dag.add_node(nodes.index(node) + 1, node, args, nodes.index(sub_nodes[0]) + 1, set())
+    
+    for node in nodes:
+        ccpar_set = set()
+        if not re.search('^(\w*\d*\()', node) and not node.endswith(")"):
+            for n in dag.nodes:
+                if nodes.index(node) + 1 in dag.nodes[n]["args"]:
+                    ccpar_set.add(n)
+            dag.add_node(nodes.index(node) + 1, node, [], nodes.index(node) + 1, ccpar_set)
+    
+    return nodes, dag
+
+def update_eq_ineq(equalities, inequalities, nodes):
+    nodes = sorted(nodes, key=len, reverse=True)
+    for i in range(len(equalities)):
+        for node in range(len(equalities[i])):
+            equalities[i][node] = nodes.index(equalities[i][node]) + 1
+    
+    for i in range(len(inequalities)):
+        for node in range(len(inequalities[i])):
+            inequalities[i][node] = nodes.index(inequalities[i][node]) + 1
+    return equalities, inequalities
+
+def translate_string(formula):
+    if formula.startswith("(") and formula.endswith(")"):
+        formula = formula[1:-1]
+    formula = formula.replace("&", "and")
+    for sub_formula in re.split(" and ", formula):
+        temp = sub_formula
+        if sub_formula.startswith("(") and sub_formula.endswith(")"):
+            sub_formula = sub_formula[1:-1]
+            if "!" in sub_formula:
+                sub_formula = sub_formula[3:-1]
+                sub_formula = sub_formula.replace("=", "!=")
+            formula = formula.replace(temp, sub_formula)
+    return formula
 
 def visualize_dag(dag):
-        G = nx.DiGraph()
+    G = nx.DiGraph()
+    # Add nodes to the graph
+    for node in dag.nodes:
+        G.add_node(node)
 
-        # Add nodes to the graph
-        for node in dag.nodes:
-            G.add_node(node)
+    # Add edges to the graph
+    for node in dag.nodes:
+        for child_id in dag.nodes[node]["ccpar"]:
+            G.add_edge(child_id, node)
 
-        # Add edges to the graph
-        for node in dag.nodes:
-            for child_id in dag.nodes[node]["ccpar"]:
-                G.add_edge(child_id, node)
+    # Create a dictionary to store node labels
+    labels = {node: f"{dag.nodes[node]['fn']} (ID: {node})" for node in dag.nodes}
 
-        # Create a dictionary to store node labels
-        labels = {node: f"{dag.nodes[node]['fn']} (ID: {node})" for node in dag.nodes}
+    # Draw the graph
+    pos = nx.circular_layout(G)
+    nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', node_size=500, font_size=10, arrows=True)
+    plt.show()
 
-        # Draw the graph
-        pos = nx.circular_layout(G)
-        nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', node_size=500, font_size=10, arrows=True)
-        plt.show()
