@@ -1,13 +1,8 @@
 import re
-from cc_dag import *
-from itertools import product
 import random
-from matplotlib import pyplot as plt
-from pysmt.smtlib.parser import SmtLibParser
-from pysmt.rewritings import CNFizer 
-import re
-from itertools import product
+from cc_dag import *
 import networkx as nx
+from matplotlib import pyplot as plt
 
 
 def parsing(F,a):
