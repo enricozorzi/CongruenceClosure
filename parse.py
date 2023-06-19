@@ -6,7 +6,7 @@ from cc_dag import *
 
 def parse_formula(formula, dag):
     nodes = []
-    for sub_formula in re.split(" and ", formula):
+    for sub_formula in re.split("and|&", formula):
         sub_formula = sub_formula.replace(" ", "")
         if "!=" in sub_formula:
             dag.inequalities.append(sub_formula.split("!="))
@@ -95,7 +95,7 @@ def create_graph(dag, nodes):
             for sub_node in sub_nodes:
                 args.append(nodes.index(sub_node) + 1)
             
-            dag.add_node(nodes.index(node) + 1, node, args, nodes.index(sub_nodes[0]) + 1, set())
+            dag.add_node(nodes.index(node) + 1, node, args, nodes.index(node) + 1, set())
     
     for node in nodes:
         ccpar_set = set()
