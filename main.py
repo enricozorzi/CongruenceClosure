@@ -27,7 +27,7 @@ def main():
         print('\033[1m' , "INEQUALITIES:"  '\033[0m', cc_dag.inequalities, "\n")
            
 
-        visualize_dag(cc_dag)
+        # visualize_dag(cc_dag)
 
         # print('\033[1m' + "List of nodes:" + '\033[0m', list_of_nodes)
         print('\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m' )
@@ -75,7 +75,7 @@ def main():
                 print('\n\033[1m', "EQUALITIES:" , '\033[0m', cc_dag.equalities )
                 print('\033[1m' , "INEQUALITIES:"  '\033[0m', cc_dag.inequalities )
             
-                visualize_dag(cc_dag)
+                # visualize_dag(cc_dag)
 
                 
                 print("\n"+'\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m',  )
