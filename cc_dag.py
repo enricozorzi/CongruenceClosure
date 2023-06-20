@@ -58,7 +58,7 @@ class CC_DAG:
             self.union(id1, id2)
             for t1, t2 in list(product(pi1, pi2)):
                 if self.find(t1) != self.find(t2) and self.congruent(t1, t2):
-                    print("Merging: ", t1, t2)
+                
                     # node1 = self.NODE(t1)
                     # node2 = self.NODE(t2)
                     self.merge(t1, t2)
