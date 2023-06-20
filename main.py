@@ -7,7 +7,7 @@ import sys
 import os
 
 def main():
-    # script_name = "Test/test2.smt2"
+    #script_name = "Test/test.txt"
     script_name = sys.argv[1]
     if ".smt2" in script_name and os.path.exists(script_name):
         smt_parser = SmtLibParser()
@@ -36,23 +36,52 @@ def main():
         script = open(script_name, "r").read().splitlines()
         
         for line in script:
-            cc_dag = CC_DAG()
-            new_formula = line.replace("f", "")  # Change s to s1, s2, s3, s4 to test
-            print('\033[1m' + "Formula:" + '\033[0m' , new_formula  )
-            list_of_nodes, cc_dag = parse_formula(new_formula, cc_dag)
-            list_of_nodes = sorted(list_of_nodes, key=len, reverse=True)
-            # print('\033[1m' + "List of nodes:" + '\033[0m', list_of_nodes, "\n")
-            create_graph(cc_dag, list_of_nodes)
             
             
-            cc_dag.equalities, cc_dag.inequalities = update_eq_ineq(cc_dag.equalities, cc_dag.inequalities, list_of_nodes)
-            print('\n\033[1m', "EQUALITIES:" , '\033[0m', cc_dag.equalities )
-            print('\033[1m' , "INEQUALITIES:"  '\033[0m', cc_dag.inequalities )
-           
-            # visualize_dag(cc_dag)
+            if "or" in line:
+                print('\033[1m' + "Formula:" + '\033[0m' , line.replace("f", "")   )
+                line_or = line.split(" or ")
+                for i in range(len(line_or)):
+                    cc_dag = CC_DAG()
+                    new_formula = line_or[i].replace("f", "")  # Change s to s1, s2, s3, s4 to test
+                    print('\033[1m' + "Formula:" + '\033[0m' , new_formula  )
+                    list_of_nodes, cc_dag = parse_formula(new_formula, cc_dag)
+                    list_of_nodes = sorted(list_of_nodes, key=len, reverse=True)
+                    # print('\033[1m' + "List of nodes:" + '\033[0m', list_of_nodes, "\n")
+                    create_graph(cc_dag, list_of_nodes)
+                    
+                    
+                    cc_dag.equalities, cc_dag.inequalities = update_eq_ineq(cc_dag.equalities, cc_dag.inequalities, list_of_nodes)
+                    print('\n\033[1m', "EQUALITIES:" , '\033[0m', cc_dag.equalities )
+                    print('\033[1m' , "INEQUALITIES:"  '\033[0m', cc_dag.inequalities )
+                
+                    # visualize_dag(cc_dag)
+                    if(cc_dag.solve() == "SAT"):
+                        print("\n"+'\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m',  )
+                        break
+                    if i+1 == len(line_or) :
+                        print("\n"+'\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m',  )
+            else:
+                cc_dag = CC_DAG()
+                new_formula = line.replace("f", "")  # Change s to s1, s2, s3, s4 to test
+                print('\033[1m' + "Formula:" + '\033[0m' , new_formula  )
+                list_of_nodes, cc_dag = parse_formula(new_formula, cc_dag)
+                list_of_nodes = sorted(list_of_nodes, key=len, reverse=True)
+                # print('\033[1m' + "List of nodes:" + '\033[0m', list_of_nodes, "\n")
+                create_graph(cc_dag, list_of_nodes)
+                
+                
+                cc_dag.equalities, cc_dag.inequalities = update_eq_ineq(cc_dag.equalities, cc_dag.inequalities, list_of_nodes)
+                print('\n\033[1m', "EQUALITIES:" , '\033[0m', cc_dag.equalities )
+                print('\033[1m' , "INEQUALITIES:"  '\033[0m', cc_dag.inequalities )
+            
+                visualize_dag(cc_dag)
 
-            
-            print("\n"+'\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m',  )
+                
+                print("\n"+'\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m',  )
+
+                
+
             print('\033[1m' + "#########################################################\n" + '\033[0m')
     else:
         print("Please enter a valid file")

@@ -1,5 +1,7 @@
 f(a, b) = a and f(f(a, b), b) != a
-f(a, b) = a and f(f(d, b), b) != a
+f(a, b) = a and f(f(d, b), b) != a or f(a, b) = a and f(f(a, b), b) != a
+f(a, b) = a and f(f(a, b), b) != a or f(a, b) = a and f(f(d, b), b) != a
+f(a, b) = a and f(f(a, b), b) != a or f(a, b) = a and f(f(a, b), b) != a
 f(f(f(a))) = a and f(f(f(f(f(a))))) = a and f(a) != a
 f(f(f(a))) = f(a) and f(f(a)) = a and f(a) != a
 f(x) = f(y) and x != y

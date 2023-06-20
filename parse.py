@@ -6,6 +6,7 @@ from cc_dag import *
 
 def parse_formula(formula, dag):
     nodes = []
+
     for sub_formula in re.split("and|&", formula):
         sub_formula = sub_formula.replace(" ", "")
         if "!=" in sub_formula:
@@ -141,6 +142,7 @@ def translate_string(formula):
 
 def visualize_dag(dag):
     G = nx.DiGraph()
+    
     # Add nodes to the graph
     for node in dag.nodes:
         G.add_node(node)
@@ -150,11 +152,14 @@ def visualize_dag(dag):
         for child_id in dag.nodes[node]["ccpar"]:
             G.add_edge(child_id, node)
 
+    
     # Create a dictionary to store node labels
     labels = {node: f"{dag.nodes[node]['fn']} (ID: {node})" for node in dag.nodes}
 
     # Draw the graph
     pos = nx.circular_layout(G)
+    
+    
     nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', node_size=500, font_size=10, arrows=True)
     plt.show()
 
