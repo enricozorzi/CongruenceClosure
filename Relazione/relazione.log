@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.18)  22 JUN 2023 12:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.18)  22 JUN 2023 17:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -733,49 +733,49 @@ Overfull \hbox (0.57724pt too wide) in paragraph at lines 35--36
 
 [1
 
-] [2] (C:\Users\Enrico\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+] (C:\Users\Enrico\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
-) [3] [4]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 202.
+) [2] [3] [4]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 232.
  (C:\Users\Enrico\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 202.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 232.
  (C:\Users\Enrico\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [5]
-<graph/(a, b) = a and ((a, b), b) != a.png, id=116, 462.528pt x 346.896pt>
+<graph/(a, b) = a and ((a, b), b) != a.png, id=143, 462.528pt x 346.896pt>
 File: graph/(a, b) = a and ((a, b), b) != a.png Graphic file (type png)
 <use graph/(a, b) = a and ((a, b), b) != a.png>
-Package pdftex.def Info: graph/(a, b) = a and ((a, b), b) != a.png  used on input line 223.
+Package pdftex.def Info: graph/(a, b) = a and ((a, b), b) != a.png  used on input line 253.
 (pdftex.def)             Requested size: 203.83759pt x 156.48814pt.
-<graph/((a))=(b)&((a))!=(b).png, id=118, 462.528pt x 346.896pt>
+<graph/((a))=(b)&((a))!=(b).png, id=145, 462.528pt x 346.896pt>
 File: graph/((a))=(b)&((a))!=(b).png Graphic file (type png)
 <use graph/((a))=(b)&((a))!=(b).png>
-Package pdftex.def Info: graph/((a))=(b)&((a))!=(b).png  used on input line 228.
+Package pdftex.def Info: graph/((a))=(b)&((a))!=(b).png  used on input line 258.
 (pdftex.def)             Requested size: 203.83759pt x 156.48814pt.
-<graph/(x) = (y) and x != y.png, id=119, 462.528pt x 346.896pt>
+<graph/(x) = (y) and x != y.png, id=146, 462.528pt x 346.896pt>
 File: graph/(x) = (y) and x != y.png Graphic file (type png)
 <use graph/(x) = (y) and x != y.png>
-Package pdftex.def Info: graph/(x) = (y) and x != y.png  used on input line 233.
+Package pdftex.def Info: graph/(x) = (y) and x != y.png  used on input line 263.
 (pdftex.def)             Requested size: 203.83759pt x 156.48814pt.
-<graph/(((a))) = (a) and ((a)) = a and (a) != a.png, id=120, 462.528pt x 346.896pt>
+<graph/(((a))) = (a) and ((a)) = a and (a) != a.png, id=147, 462.528pt x 346.896pt>
 File: graph/(((a))) = (a) and ((a)) = a and (a) != a.png Graphic file (type png)
 <use graph/(((a))) = (a) and ((a)) = a and (a) != a.png>
-Package pdftex.def Info: graph/(((a))) = (a) and ((a)) = a and (a) != a.png  used on input line 238.
+Package pdftex.def Info: graph/(((a))) = (a) and ((a)) = a and (a) != a.png  used on input line 268.
 (pdftex.def)             Requested size: 203.83759pt x 156.48814pt.
-<graph/(((a))) = a and (((((a))))) = a and (a) != a.png, id=121, 462.528pt x 346.896pt>
+<graph/(((a))) = a and (((((a))))) = a and (a) != a.png, id=148, 462.528pt x 346.896pt>
 File: graph/(((a))) = a and (((((a))))) = a and (a) != a.png Graphic file (type png)
 <use graph/(((a))) = a and (((((a))))) = a and (a) != a.png>
-Package pdftex.def Info: graph/(((a))) = a and (((((a))))) = a and (a) != a.png  used on input line 243.
+Package pdftex.def Info: graph/(((a))) = a and (((((a))))) = a and (a) != a.png  used on input line 273.
 (pdftex.def)             Requested size: 203.83759pt x 156.48814pt.
 
-Overfull \hbox (2.43333pt too wide) in paragraph at lines 222--248
+Overfull \hbox (2.43333pt too wide) in paragraph at lines 252--278
 [][] []
  []
 
 
-Overfull \hbox (2.43333pt too wide) in paragraph at lines 222--248
+Overfull \hbox (2.43333pt too wide) in paragraph at lines 252--278
 [] []
  []
 
@@ -787,17 +787,17 @@ Package logreq Info: Writing requests to 'relazione.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21867 strings out of 475385
- 378397 string characters out of 2776434
- 1563867 words of memory out of 3000000
- 42897 multiletter control sequences out of 15000+600000
+ 21909 strings out of 475385
+ 378943 string characters out of 2776434
+ 1565024 words of memory out of 3000000
+ 42912 multiletter control sequences out of 15000+600000
  477313 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 87i,11n,91p,783b,1386s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 87i,11n,91p,783b,1433s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\Enrico\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/Enrico/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Enrico/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Enrico/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Enrico/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/Enrico/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on relazione.pdf (7 pages, 174427 bytes).
+Output written on relazione.pdf (7 pages, 180878 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 92 named destinations out of 1000 (max. 500000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 119 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

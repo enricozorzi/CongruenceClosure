@@ -51,28 +51,58 @@ The code is divided in 3 sections,parse,CC-DAG and main function.
 The CC\_DAG class represents the CC-DAG solver and contains methods for solving the SMT-LIB formula using the CC-DAG algorithm.
 \begin{itemize}
     \item \texttt{CC\_DAG}: The constructor of the CC\_DAG class initializes the necessary data structures and variables used in the CC-DAG algorithm.
+
     
     \item \texttt{solve(formula)}: This method checks the satisfiability of the formula by examining the CC-DAG graph. It iterates over all the inequalities in the formula and checks if the nodes representing their terms belong to different equivalence classes. If an inequality is violated, it returns False.
     
     \item \texttt{find(node)}: This method finds the representative node of the given node. It recursively traverses the parent pointers until it reaches the representative node and updates the parent pointers along the path to directly point to the representative.
     
-    \item \texttt{union(id1, id2)}: This method merges the equivalence classes of two nodes by making one node the parent of the other. It uses the heuristic to optimize the union operation by always attaching the node with the lower rank to the one with the higher rank.
-    \item \texttt{congruent(id1, id2)}: This method checks if two nodes are congruent by comparing their representative nodes.
     
-    \item \texttt{merge(id1, id2)}: 
+    \item \texttt{union(id1, id2)}: It uses the heuristic to optimize the union operation by always attaching the node with the lower rank to the one with the higher rank.
+    
+    \item \texttt{congruent(id1, id2)}: This method checks if two nodes are congruent by comparing their representative nodes.
+    \begin{lstlisting}[style=pythoncode]
+    def congruent(self, id1, id2):
+    n1 = self.NODE(id1)
+    n2 = self.NODE(id2)
+    if (len(n1["args"]) == len(n2["args"])):
+        for i in range(len(n1["args"])):
+            val1 = self.find(n1["args"][i])
+            val2 = self.find(n2["args"][i])
+            if val1 != val2:
+                return False
+        return True
+    else:
+        return False
+    \end{lstlisting}
+    
+    \item \texttt{merge(id1, id2)}: This method merges the equivalence classes of two nodes by making one node the parent of the other. 
+    
+    \begin{lstlisting}[style=pythoncode]
+    def merge(self, id1, id2):
+        a1 = self.find(id1)
+        a2 = self.find(id2)
+        if a1 != a2:
+            pi1 = self.ccpar(id1)
+            pi2 = self.ccpar(id2)
+            self.union(id1, id2)
+            for t1, t2 in list(product(pi1, pi2)):
+                if self.find(t1)!=self.find(t2) and self.congruent(t1, t2):
+                    self.merge(t1, t2)
+            return True
+        else:
+            return False
+    \end{lstlisting}
     
     \item \texttt{ccpar(id)}: This method returns the parent of the given node.
 
 \end{itemize}
-
+\newpage
 \section*{Main Function}
 The main function of the code is responsible for reading the input formula from a file, constructing the CC-DAG graph, and solving the satisfiability of the formula. It uses the \texttt{parse\_formula} function to extract the necessary information from the formula and the \texttt{create\_graph} function to construct the CC-DAG graph. Finally, it uses the \texttt{solve} method of the CC\_DAG class to solve the satisfiability of the formula.
 The main part of the code is shown below:
 \begin{enumerate}
     \item Import necessary libraries and modules.
-    \item Define the main function \texttt{main()} to execute the code.
-    
-    \item Parse the command line argument to obtain the script name.
     
     \item If the script name is a \texttt{.smt2} file and exists, perform the following steps:
     \begin{enumerate}
@@ -82,7 +112,7 @@ The main part of the code is shown below:
         
         \item Translate the formula to a string and remove unnecessary characters.
         
-        \item Initialize a \texttt{CC\_DAG} object.
+        \item Initialize a \texttt{CC\_DAG}. object
         
         \item Parse the formula and create a list of nodes.
         
@@ -114,7 +144,7 @@ The main part of the code is shown below:
         \item Stop the timer and print the elapsed time.
     \end{enumerate}
 \end{enumerate}
-\section*{Utilizing the Solver}
+\section*{Use the Solver}
 To use the solver, provide a .txt or .smt2 file as input to the \texttt{main} function. The solver will execute the CC-DAG algorithm on the formula and return the satisfiability result. 
 Additionally, you can visualize the generated CC-DAG graph using the \texttt{visualize\_dag} function.
 
@@ -169,8 +199,8 @@ The non arbitrary choice of representative in union is implemented by using the 
             n1["ccpar"] = set()
 
 \end{lstlisting}
-
-\subsection*{Data}
+\newpage
+\section*{Data}
 I take the .smt2 from the SMT-LIB-benchmarks/QF\_UF/-/tree/master/TypeSafe repository. 
 
 The .txt file contains some formulas taken from book (The Calculus of Computation by Bradley and Manna) and other formulas created by me.
@@ -215,7 +245,7 @@ test.txt(8 formulas) & 0.044 \\
 \end{center}
     
 \newpage
-\section*{Visualization}
+\section*{Visualize Graph of .txt file}
 
 \begin{figure}[h]
 

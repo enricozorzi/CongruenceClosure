@@ -1,9 +1,9 @@
 [0] Config.pm:306> INFO - This is Biber 2.18
-[3] Config.pm:309> INFO - Logfile is 'relazione.blg'
-[331] biber-MSWIN64:340> INFO - === 
-[538] Biber.pm:418> INFO - Reading 'relazione.bcf'
-[1078] Biber.pm:978> INFO - Found 0 citekeys in bib section 0
-[1141] bbl.pm:654> INFO - Writing 'relazione.bbl' with encoding 'UTF-8'
-[1141] bbl.pm:757> INFO - Output to relazione.bbl
-[1149] Biber.pm:130> WARN - The file 'relazione.bcf' does not contain any citations!
-[1149] Biber.pm:132> INFO - WARNINGS: 1
+[4] Config.pm:309> INFO - Logfile is 'relazione.blg'
+[412] biber-MSWIN64:340> INFO - === 
+[644] Biber.pm:418> INFO - Reading 'relazione.bcf'
+[1182] Biber.pm:978> INFO - Found 0 citekeys in bib section 0
+[1276] bbl.pm:654> INFO - Writing 'relazione.bbl' with encoding 'UTF-8'
+[1277] bbl.pm:757> INFO - Output to relazione.bbl
+[1287] Biber.pm:130> WARN - The file 'relazione.bcf' does not contain any citations!
+[1288] Biber.pm:132> INFO - WARNINGS: 1
