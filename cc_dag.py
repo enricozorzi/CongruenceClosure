@@ -1,5 +1,5 @@
 from itertools import product
-
+#cython: language_level=3
 
 class CC_DAG:
     def __init__(self):

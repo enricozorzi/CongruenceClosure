@@ -3,7 +3,7 @@ import random
 import networkx as nx
 from matplotlib import pyplot as plt
 from cc_dag import *
-
+#cython: language_level=3
 def parse_formula(formula, dag):
     nodes = []
 

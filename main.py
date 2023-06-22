@@ -6,6 +6,7 @@ from parse import *
 import time
 import sys
 import os
+#cython: language_level=3
 
 def main():
 
