@@ -27,9 +27,14 @@ class CC_DAG:
     def union(self, id1, id2):
         n1 = self.NODE(self.find(id1))
         n2 = self.NODE(self.find(id2))
-        n1["find"] = n2["find"]
-        n2["ccpar"].update(n1["ccpar"])
-        n1["ccpar"] = set()
+        if len(n1["ccpar"]) > len(n2["ccpar"]):
+            n2["find"] = n1["find"]
+            n1["ccpar"].update(n2["ccpar"])
+            n2["ccpar"] = set()
+        else:
+            n1["find"] = n2["find"]
+            n2["ccpar"].update(n1["ccpar"])
+            n1["ccpar"] = set()
 
     def ccpar(self, id):
         result = self.NODE(self.find(id))
