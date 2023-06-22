@@ -1,5 +1,5 @@
 
-# Congruence Closure Algorithm
+# Congruence Closure Algorithm with DAG
 
 In this project, i have implemented a solver based on the congruence closure decision algorithm.
 
