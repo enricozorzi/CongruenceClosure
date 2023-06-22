@@ -1,0 +1,91 @@
+Output of test.txt file 
+
+
+____________________________________________________________________________________________________
+
+Formula: (a, b) = a and ((a, b), b) != a
+
+EQUALITIES:  [[2, 3]]
+INEQUALITIES: [[1, 3]]
+
+The Formula is: UNSAT 
+
+____________________________________________________________________________________________________
+
+Formula: (a, b) = a and ((d, b), b) != a or (a, b) = a and ((a, b), b) != a
+
+Sub-formula: (a, b) = a and ((d, b), b) != a
+
+ EQUALITIES:  [[2, 4]]
+ INEQUALITIES: [[1, 4]]
+
+The Formula is: SAT
+____________________________________________________________________________________________________
+
+Formula: (a, b) = a and ((a, b), b) != a or (a, b) = a and ((d, b), b) != a
+
+Sub-formula: (a, b) = a and ((a, b), b) != a
+
+ EQUALITIES:  [[2, 3]]
+ INEQUALITIES: [[1, 3]]
+
+Sub-formula: (a, b) = a and ((d, b), b) != a
+
+ EQUALITIES:  [[2, 4]]
+ INEQUALITIES: [[1, 4]]
+
+The Formula is: SAT
+____________________________________________________________________________________________________
+
+Formula: (a, b) = a and ((a, b), b) != a or (a, b) = a and ((a, b), b) != a
+
+Sub-formula: (a, b) = a and ((a, b), b) != a
+
+ EQUALITIES:  [[2, 3]]
+ INEQUALITIES: [[1, 3]]
+
+Sub-formula: (a, b) = a and ((a, b), b) != a
+
+ EQUALITIES:  [[2, 3]]
+ INEQUALITIES: [[1, 3]]
+
+The Formula is: UNSAT
+____________________________________________________________________________________________________
+
+Formula: (((a))) = a and (((((a))))) = a and (a) != a
+
+EQUALITIES:  [[3, 6], [1, 6]]
+INEQUALITIES: [[5, 6]]
+
+The Formula is: UNSAT 
+
+____________________________________________________________________________________________________
+
+Formula: (((a))) = (a) and ((a)) = a and (a) != a
+
+EQUALITIES:  [[1, 3], [2, 4]]
+INEQUALITIES: [[3, 4]]
+
+The Formula is: SAT 
+
+____________________________________________________________________________________________________
+
+Formula: (x) = (y) and x != y
+
+EQUALITIES:  [[1, 2]]
+INEQUALITIES: [[3, 4]]
+
+The Formula is: SAT 
+
+____________________________________________________________________________________________________
+
+Formula: ((a))=(b)&((a))!=(b)
+
+EQUALITIES:  [[1, 3]]
+INEQUALITIES: [[1, 3]]
+
+The Formula is: UNSAT 
+
+____________________________________________________________________________________________________
+
+Time: 0.004 seconds
