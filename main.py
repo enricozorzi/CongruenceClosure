@@ -43,7 +43,10 @@ def main():
         # print('\033[1m' + "List of nodes:" + '\033[0m', list_of_nodes)
         
         # Solve the formula using the CC_DAG and print the result
-        print('\033[1m' + "The Formula is:",Fore.YELLOW + cc_dag.solve() + '\033[0m' )
+        if cc_dag.solve() == "SAT":
+            print('\033[1m' + "The Formula is:",Fore.GREEN + cc_dag.solve() + '\033[0m' )
+        else:
+            print('\033[1m' + "The Formula is:",Fore.RED + cc_dag.solve() + '\033[0m' )
 
         end = time.time()
         print('\033[1m' + "Time:" + '\033[0m',round( end - start,3),"seconds")
